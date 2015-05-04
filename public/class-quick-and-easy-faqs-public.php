@@ -486,8 +486,7 @@ class Quick_And_Easy_FAQs_Public {
 
         ?>
         <ul class="qe-faqs-filters-container">
-            <li class="active"><a class="qe-faqs-filter" href="#*" data-filter="*"><?php _e( 'All', 'quick-and-easy-faqs') ?></a></li>
-            <?php
+            <li class="active"><a class="qe-faqs-filter" href="#*" data-filter="*"><?php _e( 'All', 'quick-and-easy-faqs') ?></a></li><?php
             $faq_groups = get_terms( 'faq-group' );
             if ( ! empty( $faq_groups ) && ! is_wp_error( $faq_groups ) ) {
                 foreach ( $faq_groups as $faq_group ) {
@@ -543,6 +542,45 @@ class Quick_And_Easy_FAQs_Public {
 
         // All the custom loops ends here so reset the query
         wp_reset_query();
+
+    }
+
+    /**
+     * Integrate shortcode with Visual Composer
+     *
+     * @since   1.0.1
+     */
+    public function integrate_shortcode_with_vc() {
+
+        vc_map( array(
+            "name" => __( "Quick and Easy FAQs", "quick-and-easy-faqs" ),
+            "description" => __( "Quick and Easy FAQs Plugin", "quick-and-easy-faqs" ),
+            "base" => "faqs",
+            "category" => __( "Content", "quick-and-easy-faqs" ),
+            "params" => array (
+                array(
+                    "type" => "dropdown",
+                    "heading" => __( "Display Style", "quick-and-easy-faqs" ),
+                    "param_name" => "style",
+                    "value" => array(
+                        'Simple List' => 'list',
+                        'Toggle' => 'toggle',
+                        'Filterable Toggle' => 'filterable-toggle',
+                    ),
+                    'admin_label' => true,
+                ),
+                array(
+                    "type" => "dropdown",
+                    "heading" => __( "Display FAQs in Groups", "quick-and-easy-faqs" ),
+                    "param_name" => "grouped",
+                    "value" => array(
+                        __('Yes','framework') => 'yes',
+                        __('No','framework') => 'no',
+                    ),
+                    'admin_label' => true,
+                ),
+            )
+        ) );
 
     }
 
